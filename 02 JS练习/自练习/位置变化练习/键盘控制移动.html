@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #box{
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: fixed;
+            left: 0;
+            top: 0;
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+    <script>
+        /*  
+        键盘获取不同按键的值：
+            右：39
+            左：37
+            上：38
+            下：40
+        这种方法会导致左右按键的时候，一直往左走,右键赋值
+
+
+        习惯是按着某个键一直不动，keydown事件会每隔几毫秒触发一次
+        没有开关，只能判断一种状态
+
+        */
+        var oBox = document.getElementById("box");
+       
+        var l =0, t =0;
+          
+      
+        document.onkeydown=function(e){
+            console.log(e.keyCode);
+              if(e.keyCode===37){
+                l--;  
+              }
+               if(e.keyCode===39){
+                 l++; 
+              }
+              if(e.keyCode===38){
+                t--;
+              }
+               if(e.keyCode === 40){
+                  t++;
+              }
+              oBox.style.left = l +"px";
+              oBox.style.top = t +"px";
+            //   if(e.keyCode===37)
+        }
+
+      
+
+
+
+    </script>
+</body>
+</html>

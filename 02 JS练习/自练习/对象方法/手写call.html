@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /* 
+            call:
+                    （1）改变this指向
+                    （2）调用函数
+                    （3）可以被所有函数调用
+                    （4）如果参数传入的是undefined null指向的是window
+                     (5)如果参数传入的是
+        
+        
+         */
+         function fn (){
+             console.log(this,'离谱')
+         }
+         var obj = {
+             name:"jsjk1jj",
+             age:'hushjhkwjq'
+         }
+
+         Function.prototype.myCall=function(context){
+            if(context===undefined || context===null){
+                context=window
+            }
+            if(typeof context !="object" && typeof context !="function" ){
+                context=Object(context)
+            }
+
+            var key = Symbol('fn')
+            context[key] =this
+            var arg=Array.from(arguments).slice(1)
+
+            
+
+            eval('context[key]('+ arg.toString()+')')
+           delete  context[key]
+ 
+         }
+         fn.myCall(obj)
+         
+    </script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 去掉系统滚动条 */
+         html,body{
+            margin:0;
+            overflow:hidden;
+         }
+      
+         .bar{
+            width:40px;
+            height:100%;
+            position:fixed;
+            right:0;
+            top:0;
+            background-color:aliceblue;
+
+         }
+
+         .box{
+            width: 40px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            
+            background-color: greenyellow;
+         }
+    </style>
+</head>
+<body>
+    <div id="con"></div>
+    <div class="bar">
+        <div class="box"></div>
+    </div>
+    <script>
+      
+        var oCon = document.getElementById('con')
+        var oBar = document.querySelector('.bar')
+        var oBox = document.querySelector('.box')
+
+        // var oBoxscale =oCon.offsetHeight/document.documentElement.clientHeight
+        console.log(oCon.offsetHeight)
+        //  oBox.style.height = oBoxscale*oBar.offsetHeight
+        for(var i = 0;i<100;i++){
+            oCon.innerHTML +=(i + "<br>") 
+        }
+       
+        oBox.onmousedown = function(e){
+            e.preventDefault();
+            var mouseToBox = e.offsetY;  
+              
+            oBar.onmousemove = function(e){
+            e.preventDefault();
+            var oBoxLocation = e.clientY  -mouseToBox
+
+            if( oBoxLocation<=0){
+                oBoxLocation = 0
+            }
+            if(oBoxLocation>=oBar.clientHeight - oBox.offsetHeight){
+                oBoxLocation= oBar.clientHeight - oBox.offsetHeight;
+            }
+             oBox.style.top =oBoxLocation+ "px"
+            var oBoxAll = oBar.clientHeight - oBox.offsetHeight;
+            var oConAll =  oCon.offsetHeight-document.documentElement.clientHeight
+            var scale = oConAll/oBoxAll;
+            var oConLocation = scale* oBoxLocation
+            
+             oCon.style.transform = "translateY("+ -oBoxLocation +"px)"
+
+            }
+           document.onmouseup=function(e){          
+            oBar.onmousemove = null
+            document.onmouseup =null
+           }           
+        }
+        console.log(document.documentElement.clientHeight)
+        console.log(oBar.clientHeight - oBox.offsetHeight)
+      
+    </script>
+  
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #box{
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: fixed;
+            left: 0;
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+    <script>
+        /* 
+        键盘获取不同按键的值：
+            右：39
+            左：37
+            上：38
+            下：40
+      
+        */
+        var oBox=document.getElementById("box");
+        var x=0;
+        var y = 0;
+        var l =false,
+            r = false,
+            t = false,
+            b = false;
+            
+            document.onkeydown = function(e){
+                switch(e.keyCode){
+                    case 37:
+                        l = true;
+                    break;
+                    case 39:
+                        r = true;
+                        break;
+                    case 38:
+                        t = true;
+                        break;
+                    case 40:
+                        b = true;
+                        break;
+                }
+            }
+
+            document.onkeyup = function(e){
+                switch(e.keyCode){
+                    case 37:
+                        l = false;
+                    break;
+                    case 39:
+                        r = false;
+                        break;
+                    case 38:
+                        t = false;
+                        break;
+                    case 40:
+                        b = false;
+                        break;
+                }
+            }
+       
+        setInterval(function(){
+            if(l){
+                x--;
+            }
+            if(r){
+                x++;
+            }
+            if(t){
+                y--;
+            }
+            if(b){
+                y++;
+            }
+         oBox.style.left=x +"px";
+         oBox.style.top = y +"px";
+
+        },10)
+      
+    </script>
+</body>
+</html>

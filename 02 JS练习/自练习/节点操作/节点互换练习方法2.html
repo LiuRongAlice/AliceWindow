@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #outer{
+            width:800px;
+            height:500px;
+            background-color:aquamarine;
+            display:flex;
+
+        }
+        #center,#toleft,#toright{
+            width:200px;
+        }
+        #left{
+            width:300px;
+            text-align: center;
+            background-color: azure;
+        }
+ 
+        #right{
+            width:300px;
+            text-align: center;
+            background-color:azure;
+        }
+        #right p, #left p{
+            width:300px;
+            line-height:30px;
+            border:1px solid black;     
+           
+        }
+    </style>
+</head>
+<body>
+    <div id="outer">
+        <div id ="left">
+        <p>left的con1</p>
+        <p>left的con2</p>
+        <p>left的con3</p>
+        <p>left的con4</p>
+        <p>left的con5</p>
+       
+        </div>
+
+        <div id="center">
+            <button id="toright">>>>>>>></button>
+            <button id="toleft"><<<<<<<</button>
+        </div>
+    
+      
+        <div id="right">
+            <p>right的con1</p>
+            <p>right的con2</p>
+            <p>right的con3</p>
+            <p>right的con4</p>
+            <p>right的con5</p>
+        </div>
+
+    </div>
+    <script>
+        /* 
+            效果：点击单个元素后背景颜色变化    
+     
+        */
+       var oLeft = document.querySelector("left") 
+       var oLeftPs=oLeft.querySelectorAll("p")
+       var oRight = document.querySelector("right")
+       var oRightPs=oRight.querySelectorAll("p")
+       var oToright = document.querySelector("toright")
+       var oToleft = document.querySelectorAll("toleft")
+
+
+       for(var i = 0 ; i<oLeftPs.length;i++){
+        oLeftPs[i].onclick=function(){
+            this.style.backgroundColor = "red"
+            this.dataset.ischose = "true"
+            // this.setAttribute("isChose","true")
+          
+        }
+       }
+
+       for(var i = 0 ; i<oRightPs.length;i++){
+        var oLeftPs=oLeft.querySelectorAll("p")
+        oRightPs[i].onclick=function(){
+            this.style.backgroundColor = "red"
+            this.dataset.ischose ="true"
+            // this.setAttribute("isChose","true")  
+        }
+       }
+
+       oToright.onclick=function(){
+       for(var i = 0 ; i<oLeftPs.length;i++){
+       if(oLeftPs[i].dataset.ischose){
+           oLeftPs[i].style.backgroundColor = "transparent"
+           delete oLeftPs[i].dataset.ischose
+           oRight.appendChild(oLeftPs[i]);
+           i--
+    
+       }   
+        }
+       }
+
+       oToleft.onclick=function(){
+        var oRightPs=oRight.querySelectorAll("p")
+       for(var i = 0 ; i<oRightPs.length;i++){
+       if(oRightPs[i].dataset.ischose){
+           oRightPs[i].style.backgroundColor = "transparent"
+           delete oRightPs[i].dataset.ischose
+           oLeft.appendChild(oRightPs[i]);
+           i--
+    
+       }   
+        }
+       }
+
+ 
+
+
+       
+
+    </script>
+</body>
+</html>

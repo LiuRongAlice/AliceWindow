@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #dot{
+            width:50px;
+            height:50px;
+            background-color:blue;
+            position:fixed;
+            left:0;
+            top:0;
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <div id="dot"></div>
+    <script>
+        /* 
+          效果：选中：长按鼠标左键选中元素，元素的定位与鼠标的位置相等
+            1、点击选中长按以后，才对元素进行赋值
+            2、获取鼠标的移动距离给元素的定位赋值
+        
+        
+        
+        
+        */
+        var oDot = document.getElementById("dot");
+        var x = 0,
+            y=0;
+/* 
+
+第一步：完成事件的逻辑设计（事件绑定）
+           
+*/
+ /*     oDot.onmousedown=function(){
+        
+     document.onmousemove=function(e){
+       
+       oDot.style.left=e.clientX +"px";
+       
+       oDot.style.top=e.clientY +"px";
+       
+
+   }
+ 
+    
+            }
+      
+            oDot.onmouseup = function () {
+                
+                document.onmousemove = null;
+         
+            } */
+
+/* 
+
+    第二步：位置精确
+    
+
+
+*/
+/* oDot.onmousedown=function(e){
+
+        var mouselocation ={
+            x:e.clientX,
+            y:e.clientY
+        }
+        var Elelocation ={
+            l:oDot.offsetLeft,
+            t:oDot.offsetTop
+        }
+
+        document.onmousemove=function(e){
+          
+          oDot.style.left=e.clientX +Elelocation.l- mouselocation.x+"px";
+          
+          oDot.style.top=e.clientY +Elelocation.t- mouselocation.y+"px";
+          
+   
+      }
+    
+               }
+               oDot.onmouseup = function () {
+                   
+                   document.onmousemove = null;
+            
+               }
+ */
+
+    /* 
+        第三步：设置临界值:防止元素出去
+    
+    */
+    oDot.onmousedown=function(e){
+
+var mouselocation ={
+    x:e.clientX,
+    y:e.clientY
+}
+var Elelocation ={
+    l:oDot.offsetLeft,
+    t:oDot.offsetTop
+}
+
+document.onmousemove=function(e){
+
+    //因为后面要判断临界值，故给元素位置赋值给变量
+    var oDotPoint ={
+        x:e.clientX + Elelocation.l-mouselocation.x,
+        y:e.clientY + Elelocation.t-mouselocation.y
+    }
+  
+ 
+//横向的临界值
+  if(oDotPoint.x<=0){
+    oDotPoint.x = 0;
+  }else if(oDotPoint.x >= document.documentElement.clientWidth-oDot.offsetWidth){
+    oDotPoint.x=document.documentElement.clientWidth-oDot.offsetWidth
+  }
+  if(oDotPoint.y<=0){
+    oDotPoint.y=0;
+  }else if(oDotPoint.y >= document.documentElement.clientHeight-oDot.offsetHeight){
+    oDotPoint.y=document.documentElement.clientHeight-oDot.offsetHeight;
+  }
+
+  oDot.style.left=oDotPoint.x+"px";
+  
+  oDot.style.top=oDotPoint.y+"px";
+  
+
+}
+
+       }
+       oDot.onmouseup = function () {
+           
+           document.onmousemove = null;}
+    
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+   #box {
+            width: 100px;
+            height: 100px;
+            background-color: hotpink;
+            position: fixed;
+            left: 0;
+            top: 0;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+    <script>
+/* 
+     新属性：
+        offsetX获取事件发生的时候鼠标到目标元素的距离
+        offsetY获取事件发生的时候鼠标到目标元素的距离
+
+*/
+var oBox = document.getElementById("box")
+
+oBox.onmousedown = function(e){
+    var mousetobox={
+        x:e.offsetX,
+        y:e.offsetY
+    }
+    document.onmousemove =function(e){
+        var boxPoint={
+            x:e.clientX - mousetobox.x,
+            y:e.clientY - mousetobox.y
+        }
+
+        if(boxPoint.x<=0){
+            boxPoint.x =0;
+        }else if(boxPoint.y>=document.documentElement.clientWith-oBox.offsetWidth){
+            boxPoint.x=document.documentElement.clientWidth-oBox.offsetWidth;
+        }
+        if(boxPoint.y<=0){
+            boxPoint.y=0;
+        }else if(boxPoint.y >=document.documentElement.clientHeight-oBox.offsetWidth){
+            boxPoint.y=document.documentElement.clientHeight-oBox.offsetWidth;
+        }
+        oBox.style.left = boxPoint.x +"px";
+        oBox.style.top=boxPoint.y + "px";
+    }
+}
+oBox.onmouseup =function(){
+    oBox.onmousedown= null;
+}
+
+    </script>
+</body>
+</html>

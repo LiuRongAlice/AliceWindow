@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            list-style: none;
+            padding:0;
+            margin:0;
+        }
+        .outer{
+            width:500px;     
+            margin:0 auto;
+            border:1px solid #000; 
+            position:relative;
+        }
+      
+        .inner{
+           
+            overflow: auto;
+            
+        }
+        ul{
+            width:3500px;  
+           
+        }
+        li{
+            float:left;
+        }
+        img{
+            width:500px;
+        
+           
+        }
+
+
+        .toRight{
+            position:absolute;
+            right:0;
+            top:50%;
+            transform:translateY(-50%);
+            background-color: greenyellow;
+            font-size:20px;
+
+        }
+        .toLeft{
+            position:absolute;
+            left:0;
+            top:50%;
+            transform:translateY(-50%);
+            background-color: greenyellow;
+            font-size:20px;
+        }
+        .dot{
+            width:350px;
+            display: flex;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+          
+             /* transform:translateX(-50%);  */
+
+        }
+        .dot li{
+         border-radius: 50%;
+         width:30px;
+         height:30px;
+         margin:10px;
+         background-color:grey;
+
+            
+        }
+        .dot li.active{
+     
+         background-color:greenyellow;
+
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="outer">
+        <div class="inner">
+
+            <ul class="con">
+                <li><img src="./images/01.jpg" alt=""></li>
+                <li><img src="./images/02.jpg" alt=""></li>
+                <li><img src="./images/03.jpg" alt=""></li>
+                <li><img src="./images/04.jpg" alt=""></li>
+                <li><img src="./images/05.jpg" alt=""></li>
+                <li><img src="./images/06.jpg" alt=""></li>
+                <li><img src="./images/07.jpg" alt=""></li>
+            </ul>
+            <div class="toRight">>>></div>
+            <div class="toLeft"><<<</div> 
+            
+            <ul class="dot">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+
+        </div>
+          
+    </div>
+    <script>
+        var oCon = document.querySelector('.con')
+        var oInner = document.querySelector('.inner')
+        var oConLis = document.querySelectorAll('.con li')
+        var oConImgs = document.querySelectorAll('.con li img')
+        var oToRight = document.querySelector('.toRight')
+        var oToLeft = document.querySelector('.toLeft')
+        var oDot = document.querySelector('.dot')
+        var oDotLis = document.querySelectorAll('.dot li')
+        var autoTimer = null, 
+            moveTimer = null;
+        var i =0
+        console.log(oDotLis)
+
+        function move(){
+
+            var startLocation = oInner.scrollLeft;
+            var endstartLocation = i*oConImgs[0].offsetWidth;
+            var startStep = 0;
+            var endStep = 40;
+            var  everyStep = (endstartLocation-startLocation) /endStep
+             moveTimer = setInterval(function(){
+               startStep++;
+               if(startStep>=endStep){
+                   clearInterval(moveTimer)
+               }
+               startLocation +=everyStep;
+               oInner.scrollLeft = startLocation;
+
+           },20)
+
+
+
+        }
+        function autoMove(){
+            autoTimer = setInterval(function(){
+            clearInterval(moveTimer)
+
+            i++
+          
+            if(i>oConImgs.length -1){
+                i=0;
+            }
+            var startLocation = oInner.scrollLeft;
+            var endstartLocation = i*oConImgs[0].offsetWidth;
+            var startStep = 0;
+            var endStep = 40;
+            var  everyStep = (endstartLocation-startLocation) /endStep
+          var  moveTimer = setInterval(function(){
+               startStep++;
+               if(startStep>=endStep){
+                   clearInterval(moveTimer)
+               }
+               startLocation +=everyStep;
+               oInner.scrollLeft = startLocation;
+
+           },20)
+           oDotLis.forEach(function (item, index) {
+                    item.classList.remove("active");
+                })
+                oDotLis[i].classList.add("active");
+          
+
+
+        },1000)
+        }
+
+      
+       
+        autoMove()
+
+        oToRight.onclick=function(){
+            clearInterval(autoTimer)
+            
+            i++;
+            if(i>oConImgs.length -1){
+                i=0;
+            }
+            oDotLis.forEach(function (item, index) {
+                    item.classList.remove("active");
+                })
+                oDotLis[i].classList.add("active");
+            oInner.scrollLeft = i*oConImgs[0].offsetWidth;
+       
+            
+            autoMove()
+
+        }
+        oToLeft.onclick=function(){
+            clearInterval(autoTimer)
+
+            i++;
+            if(i>oConImgs.length -1){
+                i=0;
+            }
+            oDotLis.forEach(function (item, index) {
+                    item.classList.remove("active");
+                })
+                oDotLis[i].classList.add("active");
+            oInner.scrollLeft = i*oConImgs[0].offsetWidth;
+          
+            autoMove()
+   
+
+        }
+
+        oDotLis.forEach(function(item,index){
+            
+            item.dataset._index=index
+
+            item.onclick=function(){
+                clearInterval(autoTimer)
+                oDotLis.forEach(function (item, index) {
+                    item.classList.remove("active");
+                })
+                this.classList.add("active");
+                i= this.dataset._index
+                oInner.scrollLeft = i*oConImgs[0].offsetWidth;
+                autoMove()
+            }
+        })
+
+
+
+       
+       
+
+    </script>
+</body>
+</html>
